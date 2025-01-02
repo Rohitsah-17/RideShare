@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/item_background"
+    android:elevation="4dp"
+    android:layout_margin="8dp"
+    android:clipToPadding="false">
+
+    <!-- Booking ID Section -->
+    <TextView
+        android:id="@+id/tvBookingId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Booking ID"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:paddingBottom="8dp" />
+
+    <!-- Horizontal Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#DDDDDD"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Driver Name -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/ivDriver"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_person"
+            android:layout_marginEnd="8dp" />
+
+        <TextView
+            android:id="@+id/tvDriverName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Driver Name"
+            android:textSize="16sp"
+            android:textColor="#3F74D1" />
+    </LinearLayout>
+
+    <!-- Ride ID -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="8dp">
+
+        <ImageView
+            android:id="@+id/ivRide"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_ride"
+            android:layout_marginEnd="8dp" />
+
+        <TextView
+            android:id="@+id/tvRideId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ride ID"
+            android:textSize="16sp"
+            android:textColor="#3F74D1" />
+    </LinearLayout>
+
+    <!-- User ID -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="8dp">
+
+        <ImageView
+            android:id="@+id/ivUser"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_person"
+            android:layout_marginEnd="8dp" />
+
+        <TextView
+            android:id="@+id/tvUserId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User ID"
+            android:textSize="16sp"
+            android:textColor="#3F74D1" />
+    </LinearLayout>
+</LinearLayout>

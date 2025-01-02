@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#F9F9F9">
+
+    <!-- Header Section -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp">
+
+        <!-- Header Title -->
+        <TextView
+            android:id="@+id/headerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Inbox"
+            android:textColor="#0C3142"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true" />
+
+        <!-- Buttons Layout -->
+        <LinearLayout
+            android:id="@+id/headerButtons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingTop="8dp">
+
+            <!-- Create Group Button -->
+            <Button
+                android:id="@+id/createGroupButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create Group"
+                android:backgroundTint="#2196F3"
+                android:textColor="#FFFFFF"
+                android:drawableStart="@drawable/ic_group"
+                android:drawablePadding="8dp"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:layout_marginEnd="8dp"
+                android:elevation="4dp"
+                android:layout_gravity="center" />
+
+            <!-- Chat with Driver Button -->
+            <Button
+                android:id="@+id/chatWithDriverButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chat with Driver"
+                android:backgroundTint="#2196F3"
+                android:textColor="#FFFFFF"
+                android:drawableStart="@drawable/ic_chat"
+                android:drawablePadding="8dp"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:elevation="4dp"
+                android:layout_gravity="center" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!-- Chat List Section -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        android:layout_marginVertical="8dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chatRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:clipToPadding="false"
+            android:scrollbars="vertical"
+            android:background="#FFFFFF" />
+    </androidx.cardview.widget.CardView>
+
+    <!-- Footer Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:padding="8dp"
+        android:elevation="4dp">
+
+        <!-- Message Input -->
+        <EditText
+            android:id="@+id/messageInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Type a message..."
+            android:paddingHorizontal="8dp"
+            android:background="@drawable/rounded_background"
+            android:drawableStart="@drawable/ic_person" />
+
+        <!-- Send Button -->
+        <ImageButton
+            android:id="@+id/sendMessageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_search"
+            android:contentDescription="Send Message"
+            app:tint="#2196F3" />
+    </LinearLayout>
+</LinearLayout>

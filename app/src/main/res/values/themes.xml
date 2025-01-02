@@ -1,0 +1,37 @@
+
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.RideShare" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Theme.RideShare" parent="Base.Theme.RideShare" />
+
+
+
+    <!-- Base Large Button Style -->
+    <style name="RidingAppLargeButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="backgroundTint">@color/primary_color</item>
+        <item name="android:textColor">@color/button_text_color</item>
+    </style>
+
+    <!-- Outlined Button Style -->
+    <style name="RidingAppOutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textSize">14sp</item>
+        <item name="strokeColor">@color/primary_color</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cornerRadius">6dp</item>
+    </style>
+
+    <!-- Text Button Style -->
+    <style name="RidingAppTextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/primary_color</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+</resources>
