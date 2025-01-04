@@ -109,37 +109,38 @@ public class SearchFragment extends Fragment {
                 });
     }
 
-//    private void fetchFilteredRides() {
-//        String source = sourceInput.getText().toString().trim().toLowerCase();
-//        String destination = destinationInput.getText().toString().trim().toLowerCase();
-//        String date = dateInput.getText().toString().trim();
-//        String passengers = passengersInput.getText().toString().trim();
-//
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        CollectionReference ridesRef = db.collection("rides");
-//
-//        // Base query
-//        Query query = ridesRef;
-//
-//        // Add filters dynamically
-//        if (!TextUtils.isEmpty(source)) {
-//            query = query.whereEqualTo("fromLocation", source);
-//        }
-//        if (!TextUtils.isEmpty(destination)) {
-//            query = query.whereEqualTo("toLocation", destination);
-//        }
-//        if (!TextUtils.isEmpty(date)) {
-//            query = query.whereEqualTo("rideDate", date);
-//        }
-//        if (!TextUtils.isEmpty(passengers)) {
-//            try {
-//                int passengerCount = Integer.parseInt(passengers);
-//                query = query.whereGreaterThanOrEqualTo("passengers", passengerCount);
-//            } catch (NumberFormatException e) {
-//                Toast.makeText(getContext(), "Passengers must be a valid number.", Toast.LENGTH_SHORT).show();
-//                return;
-//            }
-//        }
+    private void fetchFilteredRides() {
+        String source = sourceInput.getText().toString().trim().toLowerCase();
+        String destination = destinationInput.getText().toString().trim().toLowerCase();
+        String date = dateInput.getText().toString().trim();
+        String passengers = passengersInput.getText().toString().trim();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference ridesRef = db.collection("rides");
+
+        // Base query
+        Query query = ridesRef;
+
+        // Add filters dynamically
+        if (!TextUtils.isEmpty(source)) {
+            query = query.whereEqualTo("fromLocation", source);
+        }
+        if (!TextUtils.isEmpty(destination)) {
+            query = query.whereEqualTo("toLocation", destination);
+        }
+        if (!TextUtils.isEmpty(date)) {
+            query = query.whereEqualTo("rideDate", date);
+        }
+        if (!TextUtils.isEmpty(passengers)) {
+            try {
+                int passengerCount = Integer.parseInt(passengers);
+                query = query.whereGreaterThanOrEqualTo("passengers", passengerCount);
+            } catch (NumberFormatException e) {
+                Toast.makeText(getContext(), "Passengers must be a valid number.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+    }
 //
 //        // Execute query
 //        query.get().addOnCompleteListener(task -> {
