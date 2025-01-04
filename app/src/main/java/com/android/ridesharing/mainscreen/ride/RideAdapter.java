@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.ridesharing.Helper.FCMNotificationSender;
 import com.android.ridesharing.R;
 import com.android.ridesharing.inbox.Booking;
 import com.google.android.material.button.MaterialButton;
@@ -62,6 +63,7 @@ public class RideAdapter extends RecyclerView.Adapter<RideAdapter.RideViewHolder
         String rideTime = (String) ride.getTime();
         String rideDate = (String) ride.getDate();
         String driverId = (String) ride.getDriverID(); // Driver's unique ID
+        String Driver_fcm = (String) ride.getFcm();
 
 
         // Date comparison logic
@@ -105,6 +107,7 @@ public class RideAdapter extends RecyclerView.Adapter<RideAdapter.RideViewHolder
                     Booking booking = new Booking(ride.getId(), userId, driverName, bookingId, driverId);
 
                     // Store the booking details in Firebase Firestore
+                    FCMNotificationSender.sendNotification(Driver_fcm , "New Booking" , "New booking from rideshare app");
                     storeBookingInFirebase(booking, v.getContext());
                 });
             } else {

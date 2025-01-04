@@ -15,12 +15,15 @@ public class Ride {
     private String vehicleName;
     private double ridePrice;
 
+    private String Driver_fcm;
+
+
     // Default constructor for Firestore
     public Ride() {
     }
 
     // Constructor
-    public Ride(String id , String fromLocation, String toLocation, String rideDate, String driverName,String driverId, String rideTime, int passengers, String vehicleName, double ridePrice) {
+    public Ride(String id , String fromLocation, String toLocation, String rideDate, String driverName,String driverId, String rideTime, int passengers, String vehicleName, double ridePrice , String fcm) {
         this.fromLocation = fromLocation;
         this.id = id;
         this.toLocation = toLocation;
@@ -31,6 +34,15 @@ public class Ride {
         this.vehicleName = vehicleName;
         this.ridePrice = ridePrice;
         this.driverId = driverId;
+        this.Driver_fcm =  fcm;
+    }
+
+    public String getFcm() {
+        return Driver_fcm;
+    }
+
+    public void setFcm(String fcm) {
+        this.Driver_fcm = fcm;
     }
 
     public String getId() {

@@ -11,15 +11,23 @@ import android.widget.EditText;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.android.ridesharing.publish.Ride;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
@@ -49,7 +57,7 @@ public class PublishFragment extends Fragment {
         editRidePrice = view.findViewById(R.id.edit_ride_price);
         editDriveName = view.findViewById(R.id.edit_driver_name);
 
-        user = FirebaseAuth.getInstance().getCurrentUser();
+
 
         // Set DatePicker onClickListener for the ride date input field
         editRideDate.setOnClickListener(v -> showDatePicker());
@@ -61,24 +69,64 @@ public class PublishFragment extends Fragment {
         MaterialButton btnPublishRide = view.findViewById(R.id.btn_publish_ride);
         btnPublishRide.setOnClickListener(v -> {
             // Get the input data
-            String fromLocation = editFromLocation.getText().toString();
-            String toLocation = editToLocation.getText().toString();
-            String rideDate = editRideDate.getText().toString();
-            String rideTime = editRideTime.getText().toString();
-            String passengers = editPassengers.getText().toString();
-            String vehicleName = editVehicleName.getText().toString();
-            String ridePrice = editRidePrice.getText().toString();
-
-            // Create an object to store the ride data
-            String driverName = editDriveName.getText().toString();
-            Ride ride = new Ride("",fromLocation, toLocation, rideDate, driverName,user.getUid(), rideTime, Integer.parseInt(passengers), vehicleName, Double.parseDouble(ridePrice));
-
-            // Upload to Firebase
-            uploadRideData(ride);
+            getFCM();
         });
 
         return view;
     }
+
+    private void getData(String fcm){
+        // Get the input data
+        String fromLocation = editFromLocation.getText().toString();
+        String toLocation = editToLocation.getText().toString();
+        String rideDate = editRideDate.getText().toString();
+        String rideTime = editRideTime.getText().toString();
+        String passengers = editPassengers.getText().toString();
+        String vehicleName = editVehicleName.getText().toString();
+        String ridePrice = editRidePrice.getText().toString();
+
+        // Create an object to store the ride data
+        String driverName = editDriveName.getText().toString();
+        Ride ride = new Ride("", fromLocation, toLocation, rideDate, driverName, user.getUid(), rideTime, Integer.parseInt(passengers), vehicleName, Double.parseDouble(ridePrice) , fcm);
+
+        // Upload to Firebase
+//        getFCM(ride);
+        uploadRideData(ride);
+    }
+
+    private void getFCM() {
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+
+            String userId = user.getUid();
+
+            DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+            DatabaseReference userRef = database.child("Users").child(userId);
+
+
+            userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        String fcm = dataSnapshot.child("FCM").getValue(String.class);
+                        getData(fcm);
+
+                        Log.d("RealtimeDB", "FCM: " + fcm);
+                    } else {
+                        Log.d("RealtimeDB", "User data not found.");
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.w("RealtimeDB", "Error reading user data", databaseError.toException());
+                }
+            });
+        } else {
+            Log.d("FirebaseAuth", "No user is signed in.");
+        }
+    }
+
 
     // Function to upload data to Firebase Firestore
 //    private void uploadRideData(Ride ride) {

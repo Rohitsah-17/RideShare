@@ -86,7 +86,6 @@ public class SearchFragment extends Fragment {
 //                            Ride Data: {passengers=3, vehicleName=Alto, driverName=Ram, rideTime=01:00,
 //                            ridePrice=800.0, fromLocation=aurangabad, toLocation=pune, rideDate=30/11/2024}
 
-
                             rideinfo.setId(ride.get("id").toString());
                             rideinfo.setDate(ride.get("rideDate").toString());
                             rideinfo.setDestination(ride.get("toLocation").toString());
@@ -95,6 +94,7 @@ public class SearchFragment extends Fragment {
                             rideinfo.setDriverName(ride.get("driverName").toString());
                             rideinfo.setTime(ride.get("rideTime").toString());
                             rideinfo.setDriverId(ride.get("driverId").toString());
+                            rideinfo.setFcm(ride.get("fcm").toString());
 
 
                             ridesData.add(rideinfo);

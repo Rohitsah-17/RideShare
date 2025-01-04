@@ -13,13 +13,15 @@ public class Ride {
     private String vehicleName;
     private double price;
 
+    private String Driver_fcm;
+
     // No-argument constructor (required by Firestore)
     public Ride() {
         // This constructor is required by Firestore to deserialize data
     }
 
     // Constructor with parameters
-    public Ride(String pickup, String destination, String date, String driverName,String driverID, String time, int capacity, String vehicleName, double price) {
+    public Ride(String pickup, String destination, String date, String driverName,String driverID, String time, int capacity, String vehicleName, double price , String fcm) {
         this.pickup = pickup;
         this.destination = destination;
         this.date = date;
@@ -29,6 +31,15 @@ public class Ride {
         this.vehicleName = vehicleName;
         this.price = price;
         this.driverID = driverID;
+        this.Driver_fcm = fcm;
+    }
+
+    public String getFcm() {
+        return Driver_fcm;
+    }
+
+    public void setFcm(String fcm) {
+        this.Driver_fcm = fcm;
     }
 
     public String getId(){

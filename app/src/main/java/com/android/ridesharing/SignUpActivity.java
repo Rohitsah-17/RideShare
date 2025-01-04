@@ -3,6 +3,7 @@ package com.android.ridesharing;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,6 +14,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.HashMap;
 
@@ -70,19 +72,38 @@ public class SignUpActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         String userId = mAuth.getCurrentUser().getUid();
-                        saveToDatabase(userId, fullName, aadharNo, mobileNo, email);
+                        generateToken(userId, fullName, aadharNo, mobileNo, email);
                     } else {
                         Toast.makeText(SignUpActivity.this, "Registration Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
-    private void saveToDatabase(String userId, String fullName, String aadharNo, String mobileNo, String email) {
+    private void generateToken(String uid ,  String fullName, String aadharNo, String mobileNo, String email){
+
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.w("FCM", "Fetching FCM registration token failed", task.getException());
+                        return;
+                    }
+                    final String token = task.getResult();
+//                    sendTokenToServer(token , uid);
+                    saveToDatabase(token,uid, fullName, aadharNo, mobileNo, email);
+                    Log.d("FCM", "Device Token: " + token);
+
+
+                });
+    }
+
+
+    private void saveToDatabase(String FCM, String userId, String fullName, String aadharNo, String mobileNo, String email) {
         HashMap<String, Object> userMap = new HashMap<>();
         userMap.put("fullName", fullName);
         userMap.put("aadharNo", aadharNo);
         userMap.put("mobileNo", mobileNo);
         userMap.put("email", email);
+        userMap.put("FCM" , FCM);
 
         databaseReference.child(userId).setValue(userMap).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {

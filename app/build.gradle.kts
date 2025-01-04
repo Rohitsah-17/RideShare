@@ -34,6 +34,19 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    packagingOptions {
+        // Exclude specific files to avoid conflicts
+        exclude("META-INF/DEPENDENCIES")
+
+        // You can also use include if you want to make sure the file is included
+        // include("META-INF/DEPENDENCIES")
+
+        // If there are other conflicting files, you can exclude them too:
+        // exclude("META-INF/NOTICE")
+        // exclude("META-INF/LICENSE")
+    }
+
 }
 
 dependencies {
@@ -46,6 +59,7 @@ dependencies {
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.database)
     implementation(libs.firebase.storage)
+    implementation(libs.firebase.messaging)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -53,6 +67,11 @@ dependencies {
     implementation ("de.hdodenhof:circleimageview:3.1.0")
     implementation ("com.google.android.material:material:1.9.0")
     implementation ("com.google.firebase:firebase-auth:22.1.0")
+
+    implementation (libs.google.auth.library.oauth2.http)
+//    implementation (libs.group.x.com.squareup.okhttp3.name)
+
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
 
     implementation ("com.google.android.gms:play-services-base:17.6.0") // or latest version
 
