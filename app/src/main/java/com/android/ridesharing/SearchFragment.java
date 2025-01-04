@@ -62,7 +62,7 @@ public class SearchFragment extends Fragment {
         fetchAllRides();
 
         // Set up search button click listener
-//        searchButton.setOnClickListener(v -> fetchFilteredRides());
+        searchButton.setOnClickListener(v -> fetchFilteredRides());
     }
 
     private void initializeViews(View view) {
@@ -109,8 +109,7 @@ public class SearchFragment extends Fragment {
                 });
     }
 
-    private void fetchFilteredRides() {
-        String source = sourceInput.getText().toString().trim().toLowerCase();
+    private void fetchFilteredRides() {String source = sourceInput.getText().toString().trim().toLowerCase();
         String destination = destinationInput.getText().toString().trim().toLowerCase();
         String date = dateInput.getText().toString().trim();
         String passengers = passengersInput.getText().toString().trim();
@@ -118,10 +117,9 @@ public class SearchFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference ridesRef = db.collection("rides");
 
-        // Base query
         Query query = ridesRef;
 
-        // Add filters dynamically
+
         if (!TextUtils.isEmpty(source)) {
             query = query.whereEqualTo("fromLocation", source);
         }
@@ -129,7 +127,7 @@ public class SearchFragment extends Fragment {
             query = query.whereEqualTo("toLocation", destination);
         }
         if (!TextUtils.isEmpty(date)) {
-            query = query.whereEqualTo("rideDate", date);
+            query = query.whereEqualTo("rideDate", date); // Ensure date format matches Firestore data
         }
         if (!TextUtils.isEmpty(passengers)) {
             try {
@@ -140,29 +138,42 @@ public class SearchFragment extends Fragment {
                 return;
             }
         }
+
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                List<Ride> FilterridesData = new ArrayList<>();
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Map<String, Object> ride = document.getData();
+                    Ride rideinfo = new Ride();
+
+                    // Safely handle null fields
+                    rideinfo.setId(ride.get("id") != null ? ride.get("id").toString() : "");
+                    rideinfo.setDate(ride.get("rideDate") != null ? ride.get("rideDate").toString() : "");
+                    rideinfo.setDestination(ride.get("toLocation") != null ? ride.get("toLocation").toString() : "");
+                    rideinfo.setPickup(ride.get("fromLocation") != null ? ride.get("fromLocation").toString() : "");
+                    rideinfo.setVehicleName(ride.get("vehicleName") != null ? ride.get("vehicleName").toString() : "");
+                    rideinfo.setDriverName(ride.get("driverName") != null ? ride.get("driverName").toString() : "");
+                    rideinfo.setTime(ride.get("rideTime") != null ? ride.get("rideTime").toString() : "");
+                    rideinfo.setDriverId(ride.get("driverId") != null ? ride.get("driverId").toString() : "");
+                    rideinfo.setFcm(ride.get("fcm") != null ? ride.get("fcm").toString() : "");
+
+                    FilterridesData.add(rideinfo);
+                    Log.d("SearchFragment", "Ride Data: " + ride);
+                }
+
+                if (FilterridesData.isEmpty()) {
+                    Toast.makeText(getContext(), "No rides found for your search criteria.", Toast.LENGTH_SHORT).show();
+                }
+
+                // Update RecyclerView
+                RideAdapter rideAdapter = new RideAdapter(getContext(), FilterridesData);
+                rideRecyclerView.setAdapter(rideAdapter);
+            } else {
+                Toast.makeText(getContext(), "Error searching for rides: " + task.getException().getMessage(),
+                        Toast.LENGTH_SHORT).show();
+                task.getException().printStackTrace();
+            }
+        });
+
     }
-//
-//        // Execute query
-//        query.get().addOnCompleteListener(task -> {
-//            if (task.isSuccessful()) {
-//                List<Ride> ridesData = new ArrayList<>();
-//                for (QueryDocumentSnapshot document : task.getResult()) {
-//                    Map<String, Object> ride = document.getData();
-//                    ridesData.add(ride);
-//                }
-//
-//                if (ridesData.isEmpty()) {
-//                    Toast.makeText(getContext(), "No rides found for your search criteria.", Toast.LENGTH_SHORT).show();
-//                }
-//
-//                // Update RecyclerView
-//                RideAdapter rideAdapter = new RideAdapter(getContext(), ridesData);
-//                rideRecyclerView.setAdapter(rideAdapter);
-//            } else {
-//                Toast.makeText(getContext(), "Error searching for rides: " + task.getException().getMessage(),
-//                        Toast.LENGTH_SHORT).show();
-//                task.getException().printStackTrace();
-//            }
-//        });
-//    }
 }
