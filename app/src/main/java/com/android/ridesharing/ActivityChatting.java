@@ -1,6 +1,7 @@
 package com.android.ridesharing;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class ActivityChatting extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -46,6 +49,8 @@ public class ActivityChatting extends AppCompatActivity {
     private String chatRoomId;
     private String driverName , driverID;
     private String userId;
+    FirebaseUser user;
+    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +62,8 @@ public class ActivityChatting extends AppCompatActivity {
         recyclerView = findViewById(R.id.chatRecyclerView);
         messageInput = findViewById(R.id.messageInput);
         sendButton = findViewById(R.id.sendButton);
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        uid = user.getUid();
 
         // Apply system bars inset padding
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -126,6 +133,8 @@ public class ActivityChatting extends AppCompatActivity {
                 for (DataSnapshot messageSnap : snapshot.getChildren()) {
                     ChatMessage message = messageSnap.getValue(ChatMessage.class);
                     if (message != null) {
+                        Log.d("message" , message.getSenderId());
+
                         messageList.add(message);
                     }
                 }
@@ -151,7 +160,7 @@ public class ActivityChatting extends AppCompatActivity {
             ChatMessage message = new ChatMessage(
                     messageText,
                     System.currentTimeMillis(),
-                    userId, // sender ID
+                    uid, // sender ID
                     true    // sent by user
             );
 
@@ -224,7 +233,9 @@ class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
         ChatMessage message = messages.get(position);
-        holder.bind(message);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        holder.bind(message , user.getUid().toString());
     }
 
     @Override
@@ -239,6 +250,8 @@ class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHolder> {
         private final TextView receivedMessageText;
         private final TextView sentMessageTime;
         private final TextView receivedMessageTime;
+        private final TextView SenderName;
+        private final TextView RcName;
 
         public MessageViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -248,19 +261,51 @@ class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHolder> {
             receivedMessageText = itemView.findViewById(R.id.receivedMessageText);
             sentMessageTime = itemView.findViewById(R.id.sentMessageTime);
             receivedMessageTime = itemView.findViewById(R.id.receivedMessageTime);
+            SenderName = itemView.findViewById(R.id.sender);
+            RcName = itemView.findViewById(R.id.RcName);
         }
 
-        public void bind(ChatMessage message) {
-            if (message.getIsSentByUser()) {
+        public void bind(ChatMessage message , String uid) {
+
+
+            if (Objects.equals(message.getSenderId(), uid)) {
                 sentLayout.setVisibility(View.VISIBLE);
                 receivedLayout.setVisibility(View.GONE);
                 sentMessageText.setText(message.getMessage());
                 sentMessageTime.setText(formatTime(message.getTimestamp()));
+                getNameByUid(message.getSenderId(), new NameCallback() {
+                    @Override
+                    public void onNameReceived(String name) {
+                        System.out.println("Name: " + name);
+                        SenderName.setText(name.toString());
+
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        System.out.println("Error: " + error);
+                    }
+                });
+
             } else {
                 sentLayout.setVisibility(View.GONE);
                 receivedLayout.setVisibility(View.VISIBLE);
                 receivedMessageText.setText(message.getMessage());
                 receivedMessageTime.setText(formatTime(message.getTimestamp()));
+                getNameByUid(message.getSenderId(), new NameCallback() {
+                    @Override
+                    public void onNameReceived(String name) {
+                        System.out.println("Name: " + name);
+                        RcName.setText(name.toString());
+
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        System.out.println("Error: " + error);
+                    }
+                });
+
             }
         }
 
@@ -269,4 +314,40 @@ class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHolder> {
             return sdf.format(new Date(timestamp));
         }
     }
+
+
+
+    public static void getNameByUid(String uid, NameCallback callback) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(uid);
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String name = dataSnapshot.child("fullName").getValue(String.class);
+                    if (name != null) {
+                        callback.onNameReceived(name);
+                    } else {
+                        callback.onError("Name not found for UID: " + uid);
+                    }
+                } else {
+                    callback.onError("No data found for UID: " + uid);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                callback.onError("Database error: " + databaseError.getMessage());
+            }
+        });
+    }
+
+    // Callback interface for Firebase
+    public interface NameCallback {
+        void onNameReceived(String name);
+        void onError(String error);
+    }
+
 }
+
+
