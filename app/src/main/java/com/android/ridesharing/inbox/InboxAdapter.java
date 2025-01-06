@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,10 +21,10 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.InboxViewHol
 
     private final List<InboxItem> inboxItemList;
     private OnChatClickListener onChatClickListener;
+    private Context context;
 
-    Context context;
     // Constructor
-    public InboxAdapter(List<InboxItem> inboxItemList , Context context) {
+    public InboxAdapter(List<InboxItem> inboxItemList, Context context) {
         this.inboxItemList = inboxItemList;
         this.context = context;
     }
@@ -38,6 +37,7 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.InboxViewHol
     @NonNull
     @Override
     public InboxViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // Inflate the correct layout (MaterialCardView or any other layout type you're using)
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user, parent, false);
         return new InboxViewHolder(view);
     }
@@ -49,34 +49,29 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.InboxViewHol
         holder.messageTextView.setText(item.getMessage());
         holder.profileImageView.setImageResource(item.getProfileImageResId());
 
-        holder.chatitem.setOnClickListener(n ->{
+        // Setting a click listener to open the chat
+        holder.itemView.setOnClickListener(v -> {
             openChatActivity(item);
         });
-
-        // Handle item click to open chat
-//        holder.itemView.setOnClickListener(v -> {
-//            if (onChatClickListener != null) {
-//                onChatClickListener.onChatClick(item);
-//            }
-//        });
     }
 
     private void openChatActivity(InboxItem item) {
         if (item.getUserId() == null || item.getUserId().isEmpty()) {
-            // Log the error and exit
-            Log.e("GroupFragment", "User ID is null or empty");
+            Log.e("InboxAdapter", "User ID is null or empty");
             return;  // Exit the method if no valid user ID
         }
+
+        // Create an Intent to open the chat activity
         Intent intent = new Intent(context, ActivityChatting.class);
         Bundle bundle = new Bundle();
-        bundle.putString("rideID", item.getUserId()); // Use userId or unique chat ID
+        bundle.putString("rideID", item.getUserId()); // Using rideID or unique chat ID
         bundle.putString("driverID", item.getUserId());
         bundle.putString("driverName", item.getName());
         intent.putExtras(bundle);
+
+        // Start the activity with the chat details
         context.startActivity(intent);
     }
-
-
 
     @Override
     public int getItemCount() {
@@ -87,18 +82,19 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.InboxViewHol
         ImageView profileImageView;
         TextView nameTextView, messageTextView;
 
-        LinearLayout chatitem;
+        // Assuming the root layout for each item is a MaterialCardView or other layout type
+        View chatItemLayout;
 
         public InboxViewHolder(@NonNull View itemView) {
             super(itemView);
             profileImageView = itemView.findViewById(R.id.profileImage);
             nameTextView = itemView.findViewById(R.id.ownerName);
             messageTextView = itemView.findViewById(R.id.vehicleDetails);
-            chatitem = itemView.findViewById(R.id.llChatItem);
+            chatItemLayout = itemView.findViewById(R.id.llChatItem); // Ensure this ID matches the item layout
         }
     }
 
-    // Interface for chat click listener
+    // Interface for chat item click listener
     public interface OnChatClickListener {
         void onChatClick(InboxItem item);
     }

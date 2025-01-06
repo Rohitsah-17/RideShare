@@ -1,56 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@drawable/item_background"
-    android:elevation="4dp"
-    android:layout_marginBottom="8dp">
+    android:layout_marginHorizontal="24dp"
+    android:layout_marginVertical="8dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="8dp">
 
-    <!-- Ride details -->
-    <TextView
-        android:id="@+id/tvDriverName"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Driver Name"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="4dp" />
+        android:orientation="vertical"
+        android:padding="24dp">
 
-    <TextView
-        android:id="@+id/tvRideInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Destination: XYZ, Pickup: ABC"
-        android:textSize="14sp"
-        android:layout_marginBottom="4dp" />
+        <!-- Driver Name -->
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvDriverName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Driver Name"
+            android:textColor="@color/primary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
 
-    <TextView
-        android:id="@+id/tvDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="06/03/2002"
-        android:textSize="14sp"
-        android:layout_marginBottom="8dp" />
+        <!-- Ride Details with icon -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
 
-    <!-- Ride time -->
-    <TextView
-        android:id="@+id/tvRideTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Time: 3:00 PM"
-        android:textSize="14sp"
-        android:layout_marginBottom="8dp" />
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_location"
+                app:tint="@color/primary"
+                android:layout_marginEnd="8dp"/>
 
-    <!-- Book button -->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvRideInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Destination: XYZ, Pickup: ABC"
+                android:textSize="14sp"/>
+        </LinearLayout>
 
-    <Button
-        android:id="@+id/btnBookRide"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Book Now"
-        android:backgroundTint="@color/primary"
-        android:textColor="@android:color/white" />
-</LinearLayout>
+        <!-- Date with icon -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_person"
+                app:tint="@color/primary"
+                android:layout_marginEnd="8dp"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="06/03/2002"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <!-- Time with icon -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_time"
+                app:tint="@color/primary"
+                android:layout_marginEnd="8dp"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvRideTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time: 3:00 PM"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <!-- Book Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBookRide"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Book Now"
+            android:textSize="16sp"
+            app:cornerRadius="8dp"/>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

@@ -26,46 +26,46 @@
             android:layout_centerVertical="true" />
 
         <!-- Buttons Layout -->
-        <LinearLayout
-            android:id="@+id/headerButtons"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:paddingTop="8dp">
+<!--        <LinearLayout-->
+<!--            android:id="@+id/headerButtons"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:gravity="center"-->
+<!--            android:paddingTop="8dp">-->
 
-            <!-- Create Group Button -->
-            <Button
-                android:id="@+id/createGroupButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Create Group"
-                android:backgroundTint="#2196F3"
-                android:textColor="#FFFFFF"
-                android:drawableStart="@drawable/ic_group"
-                android:drawablePadding="8dp"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="8dp"
-                android:layout_marginEnd="8dp"
-                android:elevation="4dp"
-                android:layout_gravity="center" />
+<!--            &lt;!&ndash; Create Group Button &ndash;&gt;-->
+<!--            <Button-->
+<!--                android:id="@+id/createGroupButton"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Create Group"-->
+<!--                android:backgroundTint="#2196F3"-->
+<!--                android:textColor="#FFFFFF"-->
+<!--                android:drawableStart="@drawable/ic_group"-->
+<!--                android:drawablePadding="8dp"-->
+<!--                android:paddingHorizontal="16dp"-->
+<!--                android:paddingVertical="8dp"-->
+<!--                android:layout_marginEnd="8dp"-->
+<!--                android:elevation="4dp"-->
+<!--                android:layout_gravity="center" />-->
 
-            <!-- Chat with Driver Button -->
-            <Button
-                android:id="@+id/chatWithDriverButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Chat with Driver"
-                android:backgroundTint="#2196F3"
-                android:textColor="#FFFFFF"
-                android:drawableStart="@drawable/ic_chat"
-                android:drawablePadding="8dp"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="8dp"
-                android:elevation="4dp"
-                android:layout_gravity="center" />
-        </LinearLayout>
+<!--            &lt;!&ndash; Chat with Driver Button &ndash;&gt;-->
+<!--            <Button-->
+<!--                android:id="@+id/chatWithDriverButton"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Chat with Driver"-->
+<!--                android:backgroundTint="#2196F3"-->
+<!--                android:textColor="#FFFFFF"-->
+<!--                android:drawableStart="@drawable/ic_chat"-->
+<!--                android:drawablePadding="8dp"-->
+<!--                android:paddingHorizontal="16dp"-->
+<!--                android:paddingVertical="8dp"-->
+<!--                android:elevation="4dp"-->
+<!--                android:layout_gravity="center" />-->
+<!--        </LinearLayout>-->
     </RelativeLayout>
 
     <!-- Chat List Section -->

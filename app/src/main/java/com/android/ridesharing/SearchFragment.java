@@ -24,6 +24,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class SearchFragment extends Fragment {
 
@@ -83,19 +84,16 @@ public class SearchFragment extends Fragment {
                             Map<String, Object> ride = document.getData();
                             Ride rideinfo = new Ride();
 
-//                            Ride Data: {passengers=3, vehicleName=Alto, driverName=Ram, rideTime=01:00,
-//                            ridePrice=800.0, fromLocation=aurangabad, toLocation=pune, rideDate=30/11/2024}
-
-                            rideinfo.setId(ride.get("id").toString());
-                            rideinfo.setDate(ride.get("rideDate").toString());
-                            rideinfo.setDestination(ride.get("toLocation").toString());
-                            rideinfo.setPickup(ride.get("fromLocation").toString());
-                            rideinfo.setVehicleName(ride.get("vehicleName").toString());
-                            rideinfo.setDriverName(ride.get("driverName").toString());
-                            rideinfo.setTime(ride.get("rideTime").toString());
-                            rideinfo.setDriverId(ride.get("driverId").toString());
-                            rideinfo.setFcm(ride.get("fcm").toString());
-
+                            // Safely handle null fields with default values
+                            rideinfo.setId(ride.containsKey("id") ? ride.get("id").toString() : "N/A");
+                            rideinfo.setDate(ride.containsKey("rideDate") ? ride.get("rideDate").toString() : "N/A");
+                            rideinfo.setDestination(ride.containsKey("toLocation") ? ride.get("toLocation").toString() : "N/A");
+                            rideinfo.setPickup(ride.containsKey("fromLocation") ? ride.get("fromLocation").toString() : "N/A");
+                            rideinfo.setVehicleName(ride.containsKey("vehicleName") ? ride.get("vehicleName").toString() : "N/A");
+                            rideinfo.setDriverName(ride.containsKey("driverName") ? ride.get("driverName").toString() : "N/A");
+                            rideinfo.setTime(ride.containsKey("rideTime") ? ride.get("rideTime").toString() : "N/A");
+                            rideinfo.setDriverId(ride.containsKey("driverId") ? ride.get("driverId").toString() : "N/A");
+                            rideinfo.setFcm(ride.containsKey("fcm") ? ride.get("fcm").toString() : "N/A");
 
                             ridesData.add(rideinfo);
                             Log.d("SearchFragment", "Ride Data: " + ride);
@@ -109,16 +107,15 @@ public class SearchFragment extends Fragment {
                 });
     }
 
-    private void fetchFilteredRides() {String source = sourceInput.getText().toString().trim().toLowerCase();
-        String destination = destinationInput.getText().toString().trim().toLowerCase();
-        String date = dateInput.getText().toString().trim();
-        String passengers = passengersInput.getText().toString().trim();
+    private void fetchFilteredRides() {
+        String source = sourceInput.getText() != null ? sourceInput.getText().toString().trim().toLowerCase() : "";
+        String destination = destinationInput.getText() != null ? destinationInput.getText().toString().trim().toLowerCase() : "";
+        String date = dateInput.getText() != null ? dateInput.getText().toString().trim() : "";
+        String passengers = passengersInput.getText() != null ? passengersInput.getText().toString().trim() : "";
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference ridesRef = db.collection("rides");
 
-        Query query = ridesRef;
-
+        Query query = db.collection("rides");
 
         if (!TextUtils.isEmpty(source)) {
             query = query.whereEqualTo("fromLocation", source);
@@ -146,26 +143,26 @@ public class SearchFragment extends Fragment {
                     Map<String, Object> ride = document.getData();
                     Ride rideinfo = new Ride();
 
-                    // Safely handle null fields
-                    rideinfo.setId(ride.get("id") != null ? ride.get("id").toString() : "");
-                    rideinfo.setDate(ride.get("rideDate") != null ? ride.get("rideDate").toString() : "");
-                    rideinfo.setDestination(ride.get("toLocation") != null ? ride.get("toLocation").toString() : "");
-                    rideinfo.setPickup(ride.get("fromLocation") != null ? ride.get("fromLocation").toString() : "");
-                    rideinfo.setVehicleName(ride.get("vehicleName") != null ? ride.get("vehicleName").toString() : "");
-                    rideinfo.setDriverName(ride.get("driverName") != null ? ride.get("driverName").toString() : "");
-                    rideinfo.setTime(ride.get("rideTime") != null ? ride.get("rideTime").toString() : "");
-                    rideinfo.setDriverId(ride.get("driverId") != null ? ride.get("driverId").toString() : "");
-                    rideinfo.setFcm(ride.get("fcm") != null ? ride.get("fcm").toString() : "");
+                    // Safely handle null fields with default values
+                    rideinfo.setId(ride.containsKey("id") ? ride.get("id").toString() : "N/A");
+                    rideinfo.setDate(ride.containsKey("rideDate") ? ride.get("rideDate").toString() : "N/A");
+                    rideinfo.setDestination(ride.containsKey("toLocation") ? ride.get("toLocation").toString() : "N/A");
+                    rideinfo.setPickup(ride.containsKey("fromLocation") ? ride.get("fromLocation").toString() : "N/A");
+                    rideinfo.setVehicleName(ride.containsKey("vehicleName") ? ride.get("vehicleName").toString() : "N/A");
+                    rideinfo.setDriverName(ride.containsKey("driverName") ? ride.get("driverName").toString() : "N/A");
+                    rideinfo.setTime(ride.containsKey("rideTime") ? ride.get("rideTime").toString() : "N/A");
+                    rideinfo.setDriverId(ride.containsKey("driverId") ? ride.get("driverId").toString() : "N/A");
+                    rideinfo.setFcm(ride.containsKey("fcm") ? ride.get("fcm").toString() : "N/A");
 
                     FilterridesData.add(rideinfo);
-                    Log.d("SearchFragment", "Ride Data: " + ride);
+                    Log.d("SearchFragment", "Filtered Ride Data: " + ride);
                 }
 
                 if (FilterridesData.isEmpty()) {
                     Toast.makeText(getContext(), "No rides found for your search criteria.", Toast.LENGTH_SHORT).show();
                 }
 
-                // Update RecyclerView
+                // Update RecyclerView with filtered rides
                 RideAdapter rideAdapter = new RideAdapter(getContext(), FilterridesData);
                 rideRecyclerView.setAdapter(rideAdapter);
             } else {
@@ -174,6 +171,5 @@ public class SearchFragment extends Fragment {
                 task.getException().printStackTrace();
             }
         });
-
     }
 }

@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    android:background="#F0F4F8">
+    android:background="@color/background">
 
     <!-- AppBar with Toolbar -->
     <com.google.android.material.appbar.AppBarLayout
@@ -19,8 +18,8 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@android:color/transparent"
             app:title="QuickRide"
-            app:titleTextColor="#2962FF"
-            android:paddingHorizontal="16dp" />
+            app:titleTextColor="@color/primary"
+            android:paddingHorizontal="24dp" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <!-- Scrollable Content -->
@@ -28,9 +27,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:paddingHorizontal="16dp"
+        android:paddingHorizontal="24dp"
         android:paddingTop="8dp"
-        android:paddingBottom="16dp">
+        android:paddingBottom="24dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,13 +38,13 @@
 
             <!-- Section Title -->
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Where are you going?"
                 android:textSize="24sp"
-                android:textColor="#2962FF"
+                android:textColor="@color/primary"
                 android:textStyle="bold"
-                android:layout_marginBottom="16dp" />
+                android:layout_marginBottom="24dp" />
 
             <!-- Search Card -->
             <com.google.android.material.card.MaterialCardView
@@ -53,44 +52,42 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="8dp"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="24dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="24dp">
 
                     <!-- Pickup Location Input -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
+                        android:layout_marginBottom="16dp"
+                        app:startIconDrawable="@drawable/ic_location"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/sourceInput"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Pickup Location"
-                            android:drawableStart="@drawable/ic_location"
-                            android:drawablePadding="8dp" />
+                            android:hint="Pickup Location"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Drop Location Input -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
+                        android:layout_marginBottom="16dp"
+                        app:startIconDrawable="@drawable/ic_location"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/destinationInput"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Drop Location"
-                            android:drawableStart="@drawable/ic_location"
-                            android:drawablePadding="8dp" />
+                            android:hint="Drop Location"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Date and Passenger Inputs -->
@@ -98,7 +95,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:weightSum="2">
+                        android:layout_marginBottom="24dp">
 
                         <!-- Date Input -->
                         <com.google.android.material.textfield.TextInputLayout
@@ -106,15 +103,14 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginEnd="8dp"
+                            app:startIconDrawable="@drawable/ic_calender"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/dateInput"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Date"
-                                android:drawableStart="@drawable/ic_calender"
-                                android:drawablePadding="8dp" />
+                                android:hint="Date"/>
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <!-- Passengers Input -->
@@ -122,15 +118,14 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            app:startIconDrawable="@drawable/ic_person"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/passengersInput"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Passengers"
-                                android:drawableStart="@drawable/ic_person"
-                                android:drawablePadding="8dp" />
+                                android:hint="Passengers"/>
                         </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
 
@@ -138,40 +133,40 @@
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/searchButton"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="56dp"
                         android:text="Find Rides"
-                        android:layout_marginTop="16dp"
-                        app:cornerRadius="24dp"
-                        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                        android:paddingVertical="12dp" />
+                        android:textSize="16sp"
+                        app:cornerRadius="8dp"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <!-- Popular Destinations -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Popular Destinations"
-                android:textSize="18sp"
-                android:textColor="#2962FF"
-                android:layout_marginBottom="8dp" />
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Popular Destinations"-->
+<!--                android:textSize="18sp"-->
+<!--                android:textColor="@color/primary"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_marginBottom="16dp" />-->
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/popularDestinations"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="16dp"
-                android:clipToPadding="false" />
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/popularDestinations"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:paddingBottom="16dp"-->
+<!--                android:clipToPadding="false" />-->
 
             <!-- Available Rides -->
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Available Rides"
                 android:textSize="18sp"
-                android:textColor="#2962FF"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp" />
+                android:textColor="@color/primary"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rideList"

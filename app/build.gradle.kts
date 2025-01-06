@@ -67,6 +67,7 @@ dependencies {
     implementation ("de.hdodenhof:circleimageview:3.1.0")
     implementation ("com.google.android.material:material:1.9.0")
     implementation ("com.google.firebase:firebase-auth:22.1.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
     implementation (libs.google.auth.library.oauth2.http)
 //    implementation (libs.group.x.com.squareup.okhttp3.name)

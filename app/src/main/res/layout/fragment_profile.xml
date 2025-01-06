@@ -40,7 +40,7 @@
                     android:id="@+id/userName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="John Doe"
+                    android:text="Rohit Sah"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="#0C3142" />
@@ -49,7 +49,7 @@
                     android:id="@+id/userEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="john.doe@example.com"
+                    android:text="rohitsah1705@gmail.com"
                     android:textSize="14sp"
                     android:textColor="#607D8B" />
 
@@ -107,7 +107,7 @@
                     android:id="@+id/totalRides"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="120"
+                    android:text="12"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="#0C3142" />
@@ -132,7 +132,7 @@
                     android:id="@+id/totalDistance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2350"
+                    android:text="1"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="#0C3142" />
