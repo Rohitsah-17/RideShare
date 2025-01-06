@@ -79,9 +79,28 @@ public class EditProfileActivity extends AppCompatActivity {
         databaseReference.updateChildren(updates).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
-                finish(); // Close this activity and return to the previous one
+                // Re-fetch updated data
+                fetchUpdatedUserData();
             } else {
                 Toast.makeText(this, "Failed to update profile", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void fetchUpdatedUserData() {
+        databaseReference.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful() && task.getResult() != null) {
+                DataSnapshot dataSnapshot = task.getResult();
+                String updatedName = dataSnapshot.child("name").getValue(String.class);
+                String updatedEmail = dataSnapshot.child("email").getValue(String.class);
+
+                // Update UI with the fetched data
+                editUserName.setText(updatedName);
+                editUserEmail.setText(updatedEmail);
+
+                Toast.makeText(this, "Data refreshed", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Failed to refresh data", Toast.LENGTH_SHORT).show();
             }
         });
     }

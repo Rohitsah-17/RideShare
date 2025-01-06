@@ -1,47 +1,42 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/main"
-    android:background="@color/background"
     tools:context=".ActivityChatting">
 
-    <com.google.android.material.card.MaterialCardView
+    <!-- Header with driver info -->
+    <LinearLayout
         android:id="@+id/headerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="8dp"
-        app:cardCornerRadius="0dp"
-        android:background="@color/primary">
+        android:background="@color/primary"
+        android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/drivername"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="24dp">
+            android:text="Driver Name"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/drivername"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Driver Name"
-                android:textColor="@android:color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/driverid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Driver ID"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+    </LinearLayout>
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/driverid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Driver ID"
-                android:textColor="@android:color/black"
-                android:textSize="14sp" />
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
-
+    <!-- RecyclerView for chat messages -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatRecyclerView"
         android:layout_width="match_parent"
@@ -49,55 +44,49 @@
         android:layout_above="@id/bottomLayout"
         android:layout_below="@id/headerLayout"
         android:paddingVertical="8dp"
-        android:paddingHorizontal="24dp"
+        android:paddingHorizontal="12dp"
         android:clipToPadding="false"
-        android:scrollbars="vertical" />
+        android:scrollbars="vertical"
+        android:background="@color/background" />
 
-    <com.google.android.material.card.MaterialCardView
+    <!-- Bottom layout for message input -->
+    <LinearLayout
         android:id="@+id/bottomLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:cardElevation="8dp"
-        app:cardCornerRadius="0dp">
+        android:background="@color/white"
+        android:padding="8dp"
+        android:elevation="4dp"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            android:layout_marginEnd="8dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="0dp"
+            <EditText
+                android:id="@+id/messageInput"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginEnd="8dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:boxCornerRadiusBottomEnd="16dp"
-                app:boxCornerRadiusBottomStart="16dp"
-                app:boxCornerRadiusTopEnd="16dp"
-                app:boxCornerRadiusTopStart="16dp">
+                android:hint="Type a message..."
+                android:padding="12dp"
+                android:maxLines="4"
+                android:inputType="textMultiLine"
+                android:background="@android:color/transparent" />
+        </androidx.cardview.widget.CardView>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/messageInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Type a message..."
-                    android:maxLines="4"
-                    android:inputType="textMultiLine" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/sendButton"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                app:cornerRadius="24dp"
-                app:icon="@android:drawable/ic_menu_send"
-                app:iconGravity="textStart"
-                app:iconPadding="0dp" />
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+        <ImageButton
+            android:id="@+id/sendButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_menu_send"
+            android:contentDescription="Send message"
+            app:tint="@color/primary" />
+    </LinearLayout>
 
 </RelativeLayout>

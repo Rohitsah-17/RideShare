@@ -22,6 +22,8 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -62,6 +64,8 @@ public class ActivityChatting extends AppCompatActivity {
         recyclerView = findViewById(R.id.chatRecyclerView);
         messageInput = findViewById(R.id.messageInput);
         sendButton = findViewById(R.id.sendButton);
+//        MaterialButton sendButton = findViewById(R.id.sendButton);
+
         user = FirebaseAuth.getInstance().getCurrentUser();
         uid = user.getUid();
 
@@ -244,8 +248,11 @@ class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHolder> {
     }
 
     static class MessageViewHolder extends RecyclerView.ViewHolder {
-        private final LinearLayout sentLayout;
-        private final LinearLayout receivedLayout;
+//        private final LinearLayout sentLayout;
+//        private final LinearLayout receivedLayout;
+private final MaterialCardView sentLayout;
+        private final MaterialCardView receivedLayout;
+
         private final TextView sentMessageText;
         private final TextView receivedMessageText;
         private final TextView sentMessageTime;
